@@ -15,7 +15,7 @@ if (document.querySelector('.input')) {
 async function generate(url) {
   document.title = "변환 중...";
   
-  const res = await fetch(`https://naverapi.vercel.app/shorten?url=${url}`)
+  const res = await fetch(`https://naverme-shortener.vercel.app/shorten?url=${url}`)
   
   document.title = "변환 완료";
 
