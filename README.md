@@ -1,6 +1,6 @@
 ## Overview
 
-`naverme-web` is a lightweight frontend built on top of `naverme-api`.
+`naverme-web` is a simple web interface for `naverme-api`.
 
 Just paste a URL, and the app will automatically:
 
@@ -12,18 +12,6 @@ Just paste a URL, and the app will automatically:
 ```txt
 https://naverme-web.vercel.app
 ````
-
-## How It Works
-
-1. Enter a URL into the input box
-2. The app sends a request to:
-
-```txt
-https://naverme-shortener.vercel.app/shorten
-```
-
-3. A shortened `naver.me` link is generated
-4. The link is automatically copied to your clipboard
 
 ## Example
 
