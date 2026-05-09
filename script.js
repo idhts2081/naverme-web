@@ -1,30 +1,44 @@
-var input = document.querySelector('.input');
-var inputValue;
+const input = document.querySelector('.input');
+const button = document.querySelector('.button');
+const copied = document.querySelector('.copied');
+const copiedText = document.querySelector('.copiedText');
 
-if (document.querySelector('.input')) {
-  input.addEventListener('change', function() {
-    inputValue = input.value;
-    if (!inputValue.includes('http')) {
-      generate('https://' + inputValue)
-    } else {
-      generate(inputValue)
-    }
-  });
-}
+button.addEventListener('click', function () {
+  const inputValue = input.value.trim();
+
+  if (!inputValue) return;
+
+  const url = inputValue.startsWith('http')
+    ? inputValue
+    : `https://${inputValue}`;
+
+  generate(url);
+});
 
 async function generate(url) {
-  document.title = "변환 중...";
-  
-  const res = await fetch(`https://naverme-shortener.vercel.app/shorten?url=${url}`)
-  
-  document.title = "변환 완료";
+  try {
+    document.title = 'Converting...';
 
-  const data = await res.text();
-  const j = JSON.parse(data);
-  console.log(j.result.data)
+    const res = await fetch(
+      `https://naverme-shortener.vercel.app/shorten?url=${encodeURIComponent(url)}`
+    );
 
-  await navigator.clipboard.writeText(j.result.data);
-  document.querySelector(".copiedText").textContent=`${j.result.data} 링크가 복사되었어요!`;
-  document.querySelector(".copiedText").style.visibility ='visible';
-  document.querySelector(".copied").style.visibility ='visible';
-};
+    const data = await res.json();
+
+    document.title = 'Done';
+
+    await navigator.clipboard.writeText(data.result.data);
+
+    copiedText.textContent = `${data.result.data} has been copied!`;
+    copiedText.style.visibility = 'visible';
+    copied.style.visibility = 'visible';
+  } catch (err) {
+    document.title = 'naver.me';
+
+    copiedText.textContent = 'Failed to shorten the link.';
+    copiedText.style.visibility = 'visible';
+    copied.style.visibility = 'visible';
+
+    console.error(err);
+  }
+}
