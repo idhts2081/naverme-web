@@ -74,6 +74,8 @@ body {
   font-size: 14px;
   cursor: pointer;
 
+  color: #000;
+
   transition:
     background-color 0.2s ease,
     transform 0.15s ease,
