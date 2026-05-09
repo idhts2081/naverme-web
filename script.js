@@ -17,6 +17,10 @@ button.addEventListener('click', function () {
 
 async function generate(url) {
   try {
+    button.disabled = true;
+    button.classList.add('loading');
+    button.textContent = '...';
+
     document.title = 'Converting...';
 
     const res = await fetch(
@@ -40,5 +44,9 @@ async function generate(url) {
     copied.style.visibility = 'visible';
 
     console.error(err);
+  } finally {
+    button.disabled = false;
+    button.classList.remove('loading');
+    button.textContent = 'Shorten';
   }
 }
